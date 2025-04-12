@@ -21,4 +21,8 @@
     <string name="action_sign_up">Sign up</string>
     <string name="desc_already_have_account">Already have account?</string>
     <string name="action_back">Back</string>
+    <string name="register_failed">Register failed!</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_confirm_password">Invalid confirm password</string>
+    <string name="invalid_name">Invalid name</string>
 </resources>

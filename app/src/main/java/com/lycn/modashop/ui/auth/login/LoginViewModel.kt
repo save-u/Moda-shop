@@ -8,7 +8,7 @@ import com.lycn.modashop.R
 import com.lycn.modashop.data.repository.LoginRepository
 import com.lycn.modashop.data.model.Result
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(val loginRepository: LoginRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm

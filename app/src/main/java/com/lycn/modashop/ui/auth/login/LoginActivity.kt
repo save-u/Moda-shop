@@ -1,19 +1,16 @@
 package com.lycn.modashop.ui.auth.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.Toast
-import com.lycn.modashop.R
 import com.lycn.modashop.databinding.ActivityLoginBinding
+import com.lycn.modashop.ui.auth.register.RegisterActivity
 import com.lycn.modashop.ui.base.ViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
@@ -30,8 +27,10 @@ class LoginActivity : AppCompatActivity() {
         val inputLayoutEmail = binding.inputLayoutEmail
         val editEmail = binding.editEmail
         val inputLayoutPassword = binding.inputLayoutPassword
-        val password = binding.editPassword
-        val login = binding.btnLogin
+        val editPassword = binding.editPassword
+        val btnLogIn = binding.btnLogin
+        val btnCreateAccount = binding.btnCreateAccount
+
         val loading = binding.pbLoading
 
         loginViewModel = ViewModelProvider(this, ViewModelFactory()).get(LoginViewModel::class.java)
@@ -40,13 +39,13 @@ class LoginActivity : AppCompatActivity() {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            btnLogIn.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
-                inputLayoutEmail!!.error = getString(loginState.usernameError)
+                inputLayoutEmail.error = getString(loginState.usernameError)
             }
             if (loginState.passwordError != null) {
-                inputLayoutPassword!!.error = getString(loginState.passwordError)
+                inputLayoutPassword.error = getString(loginState.passwordError)
             }
         })
 
@@ -65,6 +64,17 @@ class LoginActivity : AppCompatActivity() {
             //Complete and destroy login activity once successful
             finish()
         })
+
+        btnCreateAccount.setOnClickListener {
+            navigateToRegister()
+        }
+
+    }
+
+    private fun navigateToRegister() {
+        val intent = Intent(this, RegisterActivity::class.java);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
