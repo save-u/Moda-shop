@@ -6,4 +6,23 @@
     </style>
 
     <style name="Theme.ModaShop" parent="Base.Theme.ModaShop" />
+
+    <style name="Button.Primary" parent="Base.Theme.ModaShop">
+        <item name="android:background">@drawable/bg_button_primary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:height">50.dp</item>
+    </style>
+
+    <style name="ButtonSecondaryRound" parent="Base.Theme.ModaShop">
+        <item name="android:background">@drawable/bg_button_secondary_round</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:height">50.dp</item>
+    </style>
+
+    <style name="ButtonSecondaryLink">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundTint">@null</item>
+    </style>
 </resources>
