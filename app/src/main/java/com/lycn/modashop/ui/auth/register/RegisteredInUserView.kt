@@ -1,4 +1,4 @@
 package com.lycn.modashop.ui.auth.register
 
-class RegisteredInUserView {
+data class RegisteredInUserView(val userId: String) {
 }

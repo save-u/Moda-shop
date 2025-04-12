@@ -9,13 +9,20 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import com.lycn.modashop.MainActivity
 import com.lycn.modashop.databinding.ActivityLoginBinding
 import com.lycn.modashop.ui.auth.register.RegisterActivity
+import com.lycn.modashop.ui.auth.register.RegisteredInUserView
+import com.lycn.modashop.ui.auth.register.addOnTextChange
 import com.lycn.modashop.ui.base.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,20 +40,17 @@ class LoginActivity : AppCompatActivity() {
 
         val loading = binding.pbLoading
 
-        loginViewModel = ViewModelProvider(this, ViewModelFactory()).get(LoginViewModel::class.java)
-
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
             btnLogIn.isEnabled = loginState.isDataValid
 
-            if (loginState.usernameError != null) {
-                inputLayoutEmail.error = getString(loginState.usernameError)
-            }
-            if (loginState.passwordError != null) {
-                inputLayoutPassword.error = getString(loginState.passwordError)
-            }
+            inputLayoutEmail.error =
+                if (loginState.usernameError == null) null else getString(loginState.usernameError)
+
+            inputLayoutPassword.error =
+                if (loginState.passwordError == null) null else getString(loginState.passwordError)
         })
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
@@ -57,16 +61,22 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
+                navigateToMain(loginResult.success)
             }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
         })
+
+        val onTextChange = { _: String ->
+            loginViewModel.loginDataChanged(editEmail.text.toString(), editPassword.text.toString())
+        }
+        editEmail.addOnTextChange(onTextChange)
+        editPassword.addOnTextChange(onTextChange)
 
         btnCreateAccount.setOnClickListener {
             navigateToRegister()
+        }
+
+        btnLogIn.setOnClickListener {
+            loginViewModel.login(editEmail.text.toString(), editPassword.text.toString())
         }
 
     }
@@ -77,11 +87,16 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        // TODO: Handle login success 
+
+    private fun navigateToMain(userView: LoggedInUserView) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+    private fun showLoginFailed(@StringRes error: Int) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 }

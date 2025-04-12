@@ -16,18 +16,19 @@ class ViewModelFactory : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(
-                loginRepository = LoginRepository(
-                    dataSource = LoginDataSource()
-                )
-            ) as T
-        }
-        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
-            return RegisterViewModel(
-                registerRepository = RegisterRepository()
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+        TODO("")
+//        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+//            return LoginViewModel(
+//                loginRepository = LoginRepository(
+//                    dataSource = LoginDataSource()
+//                )
+//            ) as T
+//        }
+//        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
+//            return RegisterViewModel(
+//                registerRepository = RegisterRepository()
+//            ) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

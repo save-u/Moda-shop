@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".ModaShopApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,8 +20,8 @@
         <activity
             android:name=".ui.auth.login.LoginActivity"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

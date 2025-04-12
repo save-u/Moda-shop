@@ -1,24 +1,32 @@
 package com.lycn.modashop.ui.auth.register
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import com.lycn.modashop.MainActivity
 import com.lycn.modashop.R
 import com.lycn.modashop.databinding.ActivityRegisterBinding
 import com.lycn.modashop.ui.base.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import androidx.activity.viewModels
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var registerViewModel: RegisterViewModel
+
+    private val registerViewModel: RegisterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +52,13 @@ class RegisterActivity : AppCompatActivity() {
         val btnSignUp = binding.btnSignUp
         val loading = binding.pbLoading
         val btnSignIn = binding.btnSignIn
-
-        registerViewModel =
-            ViewModelProvider(this, ViewModelFactory()).get(RegisterViewModel::class.java)
+        val btnBack = binding.imgBtnBack
 
         registerViewModel.registerFormState.observe(this) {
             val registerState = it ?: return@observe
 
             // disable login button unless both username / password is valid
-            btnSignIn.isEnabled = registerState.isDataValid
+            btnSignUp.isEnabled = registerState.isDataValid
 
             if (registerState.nameError == null) {
                 inputLayoutName.error = null
@@ -85,15 +91,11 @@ class RegisterActivity : AppCompatActivity() {
                 showRegisterFailed(registerResult.error)
             }
             if (registerResult.success != null) {
-                updateUiWithUser(registerResult.success)
+                navigateToMain(registerResult.success)
             }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
         }
 
-        btnSignIn.setOnClickListener {
+        btnSignUp.setOnClickListener {
             registerViewModel.register(
                 name = editName.text.toString(),
                 email = editEmail.text.toString(),
@@ -117,14 +119,23 @@ class RegisterActivity : AppCompatActivity() {
         btnSignIn.setOnClickListener {
             finish()
         }
+
+        btnBack.setOnClickListener {
+            finish()
+        }
     }
 
-    private fun updateUiWithUser(userView: RegisteredInUserView) {
-        // TODO:
+    private fun navigateToMain(userView: RegisteredInUserView) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        //Complete and destroy register activity
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
     private fun showRegisterFailed(error: Int) {
-        // TODO:
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 }
 

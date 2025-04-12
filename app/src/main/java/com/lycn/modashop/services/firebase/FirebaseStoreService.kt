@@ -1,7 +1,7 @@
 package com.lycn.modashop.services.firebase
 
-import com.google.firebase.firestore.auth.User
+import com.lycn.modashop.data.model.Result
 
-interface FirebaseRealtimeService {
-    fun addUser(userId: String, name: String, email: String, password: String)
+interface FirebaseStoreService {
+    suspend fun addUser(userId: String, name: String, email: String, password: String): Result<String>
 }
