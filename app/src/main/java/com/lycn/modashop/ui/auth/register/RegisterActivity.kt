@@ -12,13 +12,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
-import com.lycn.modashop.MainActivity
+import com.lycn.modashop.ui.home.MainActivity
 import com.lycn.modashop.R
 import com.lycn.modashop.databinding.ActivityRegisterBinding
-import com.lycn.modashop.ui.base.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import androidx.activity.viewModels
 
 @AndroidEntryPoint

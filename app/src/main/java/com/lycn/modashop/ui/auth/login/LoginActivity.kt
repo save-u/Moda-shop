@@ -3,21 +3,17 @@ package com.lycn.modashop.ui.auth.login
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.lycn.modashop.MainActivity
+import com.lycn.modashop.ui.home.MainActivity
 import com.lycn.modashop.databinding.ActivityLoginBinding
 import com.lycn.modashop.ui.auth.register.RegisterActivity
-import com.lycn.modashop.ui.auth.register.RegisteredInUserView
 import com.lycn.modashop.ui.auth.register.addOnTextChange
-import com.lycn.modashop.ui.base.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
