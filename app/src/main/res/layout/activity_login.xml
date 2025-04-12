@@ -12,7 +12,7 @@
     tools:context=".ui.auth.login.LoginActivity">
 
     <ImageView
-        android:id="@+id/imgHello"
+        android:id="@+id/imgWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/hello"
@@ -31,10 +31,10 @@
         android:textSize="32.sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgHello" />
+        app:layout_constraintTop_toBottomOf="@+id/imgWelcome" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayoutEmail"
+        android:id="@+id/inputLayoutName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -57,7 +57,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayoutPassword"
+        android:id="@+id/inputLayoutEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -67,7 +67,7 @@
         app:boxCornerRadiusTopStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayoutEmail"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutName"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -94,7 +94,7 @@
         android:text="@string/action_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayoutPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutEmail" />
 
     <Button
         android:id="@+id/btnRegister"
@@ -132,8 +132,8 @@
         android:layout_marginBottom="64dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/inputLayoutPassword"
-        app:layout_constraintStart_toStartOf="@+id/inputLayoutPassword"
+        app:layout_constraintEnd_toEndOf="@+id/inputLayoutEmail"
+        app:layout_constraintStart_toStartOf="@+id/inputLayoutEmail"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
