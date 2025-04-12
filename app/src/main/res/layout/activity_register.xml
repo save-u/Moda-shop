@@ -184,7 +184,7 @@
                 android:textSize="18.sp" />
 
             <Button
-                android:id="@+id/btnForgotPassword"
+                android:id="@+id/btnSignIn"
                 style="@style/ButtonSecondaryLink"
                 android:layout_width="55.dp"
                 android:layout_height="wrap_content"

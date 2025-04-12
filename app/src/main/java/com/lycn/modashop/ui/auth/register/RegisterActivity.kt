@@ -41,8 +41,9 @@ class RegisterActivity : AppCompatActivity() {
         val editPassword = binding.editPassword
         val inputLayoutConfirmPassword = binding.inputLayoutConfirmPassword
         val editConfirmPassword = binding.editConfirmPassword
-        val btnSignIn = binding.btnSignUp
+        val btnSignUp = binding.btnSignUp
         val loading = binding.pbLoading
+        val btnSignIn = binding.btnSignIn
 
         registerViewModel =
             ViewModelProvider(this, ViewModelFactory()).get(RegisterViewModel::class.java)
@@ -112,6 +113,10 @@ class RegisterActivity : AppCompatActivity() {
         editEmail.addOnTextChange(onTextChange)
         editPassword.addOnTextChange(onTextChange)
         editConfirmPassword.addOnTextChange(onTextChange)
+
+        btnSignIn.setOnClickListener {
+            finish()
+        }
     }
 
     private fun updateUiWithUser(userView: RegisteredInUserView) {
