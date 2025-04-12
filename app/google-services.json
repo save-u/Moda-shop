@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "901915759379",
+    "project_id": "moda-46a34",
+    "storage_bucket": "moda-46a34.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901915759379:android:5e745830e67f362d9b80e6",
+        "android_client_info": {
+          "package_name": "com.lycn.modashop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANk3Dx1GffXy2nhPAz4zBFHdypJVppGzY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
