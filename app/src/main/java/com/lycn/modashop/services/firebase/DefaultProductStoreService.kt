@@ -4,10 +4,7 @@ import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.getField
-import com.google.firebase.firestore.ktx.getField
 import com.lycn.modashop.data.model.Kind
 import com.lycn.modashop.data.model.Product
 import kotlinx.coroutines.tasks.await
@@ -38,16 +35,19 @@ class DefaultProductStoreService @Inject constructor(private val database: Fireb
     override suspend fun fetchProductsByKind(kind: String): Result<List<Product>> {
         val logTag = "fetchProductsByKind: $kind"
         try {
-            val kindRef = database.collection("kinds").document(kind)
-            val result = database.collection("products")
-                .whereEqualTo("kind", kindRef)
+            val kindResult = database.collection("kinds").document(kind)
                 .get()
                 .await()
-            val productResults = result.documents.map { doc ->
-                doc.toProduct()
+            val productList = kindResult.get("products") as? List<*>
+
+            val productRef: List<DocumentReference> =
+                productList?.filterIsInstance<DocumentReference>() ?: listOf()
+            val products = productRef.map { ref ->
+                val product = ref.get().await()
+                product.toProduct()
             }
-            Log.i(logTag, "Size: " + productResults.size)
-            return Result.Success(productResults)
+            Log.i(logTag, "Size: " + products.size)
+            return Result.Success(products ?: listOf())
         } catch (e: Exception) {
             Log.e(logTag, e.message.toString())
             return Result.Error(e)
@@ -71,13 +71,11 @@ class DefaultProductStoreService @Inject constructor(private val database: Fireb
 }
 
 fun DocumentSnapshot.toProduct(): Product {
-    val kind = get(FieldPath.of("kind")) as DocumentReference
     return Product(
         id = id,
         name = getString("name")!!,
         price = getLong("price")!!.toInt(),
         imageUrl = getString("imageUrl") ?: "",
-        kind = kind.path,
         currency = getString("currency")!!
     )
 }
@@ -85,6 +83,7 @@ fun DocumentSnapshot.toProduct(): Product {
 fun DocumentSnapshot.toKind(): Kind {
     return Kind(
         name = getString("name") ?: "",
-        icon = ""
+        icon = "",
+        default = getBoolean("default") ?: false
     )
 }

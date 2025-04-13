@@ -1,5 +1,6 @@
 package com.lycn.modashop.ui.home.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.lycn.modashop.ui.home.home.kinds.KindAdapter
 import com.lycn.modashop.ui.home.home.kinds.KindView
 import com.lycn.modashop.ui.home.home.products.ProductAdapter
 import com.lycn.modashop.ui.home.home.products.ProductView
+import com.lycn.modashop.ui.home.home.products.detail.ProductDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -31,6 +33,10 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    companion object {
+        val PRODUCT_ID_KEY = HomeFragment::class.java.name + "PRODUCT_ID_KEY"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,8 +46,12 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
         val rvHighlightKinds = binding.rvHighlightKinds
         val rvProducts = binding.rvContent
+        val pbProductLoading = binding.pbProductLoading
 
         _homeViewModel.fetchKindResult.observe(viewLifecycleOwner) { data ->
+            data.findLast { it.select }?.let {
+                fetchProductByKind(it.name)
+            }
             _kindAdapter?.apply {
                 items = data
                 notifyDataSetChanged()
@@ -49,6 +59,7 @@ class HomeFragment : Fragment() {
         }
 
         _homeViewModel.fetchProductResult.observe(viewLifecycleOwner) { data ->
+            pbProductLoading.visibility = View.GONE
             _productAdapter?.apply {
                 items = data
                 notifyDataSetChanged()
@@ -80,18 +91,29 @@ class HomeFragment : Fragment() {
                 }
             }
             _kindAdapter?.notifyDataSetChanged()
-        }
 
-        _homeViewModel.fetchProductsByKind(kindView.name)
+            fetchProductByKind(kindView.name)
+        }
+    }
+
+    private fun fetchKinds() {
+        _homeViewModel.fetchKind()
+    }
+
+    private fun fetchProductByKind(kind: String) {
+        _binding?.pbProductLoading?.visibility = View.VISIBLE
+        _homeViewModel.fetchProductsByKind(kind)
     }
 
     private fun onClickProductViewItem(productView: ProductView) {
-        // TODO:
+        val intent = Intent(requireContext(), ProductDetailActivity::class.java)
+        intent.putExtra(PRODUCT_ID_KEY, productView.id)
+        startActivity(intent)
     }
 
     override fun onStart() {
         super.onStart()
-        _homeViewModel.fetchKind()
+        fetchKinds()
     }
 
     override fun onDestroyView() {

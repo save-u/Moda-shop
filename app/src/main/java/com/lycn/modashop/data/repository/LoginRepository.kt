@@ -21,4 +21,8 @@ class LoginRepository @Inject constructor(
     suspend fun login(email: String, password: String): Result<String> {
         return firebaseAuthService.signInUser(email, password)
     }
+
+    fun isUserLogged(): Boolean {
+        return firebaseAuthService.isUserLogged()
+    }
 }

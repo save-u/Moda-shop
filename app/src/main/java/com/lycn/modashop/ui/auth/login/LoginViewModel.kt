@@ -32,7 +32,6 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
                 _loginResult.postValue(LoginResult(error = R.string.login_failed))
             }
         }
-
     }
 
     fun loginDataChanged(email: String, password: String) {
@@ -58,5 +57,9 @@ class LoginViewModel @Inject constructor(val loginRepository: LoginRepository) :
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
+    }
+
+    fun isUserExisted(): Boolean {
+        return loginRepository.isUserLogged()
     }
 }

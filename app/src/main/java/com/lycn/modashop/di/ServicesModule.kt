@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.lycn.modashop.services.firebase.DefaultFirebaseAuthService
-import com.lycn.modashop.services.firebase.DefaultFirebaseUserStoreService
+import com.lycn.modashop.services.firebase.DefaultUserStoreService
 import com.lycn.modashop.services.firebase.AuthService
 import com.lycn.modashop.services.firebase.DefaultProductStoreService
 import com.lycn.modashop.services.firebase.ProductStoreService
@@ -25,7 +25,7 @@ object ServicesModule {
 
     @Provides
     fun provideFirebaseUserStoreService(): UserStoreService {
-        return DefaultFirebaseUserStoreService(database = Firebase.firestore)
+        return DefaultUserStoreService(database = Firebase.firestore)
     }
 
     @Provides

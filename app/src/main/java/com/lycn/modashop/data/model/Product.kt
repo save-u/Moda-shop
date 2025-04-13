@@ -6,7 +6,6 @@ data class Product(
     val currency: String,
     val imageUrl: String,
     val price: Int,
-    val kind: String
 ) {
 
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:paddingHorizontal="16dp"
     tools:context=".ui.home.home.HomeFragment">
 
     <TextView
@@ -23,7 +23,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHighlightKinds"
         android:layout_width="wrap_content"
-        android:layout_height="100.dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15.dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,10 +34,23 @@
         android:id="@+id/rvContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10.dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvHighlightKinds" />
+
+    <ProgressBar
+        android:id="@+id/pbProductLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/rvContent"
+        app:layout_constraintEnd_toEndOf="@id/rvContent"
+        app:layout_constraintStart_toStartOf="@id/rvContent"
+        app:layout_constraintTop_toTopOf="@id/rvContent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

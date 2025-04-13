@@ -29,8 +29,9 @@ class HomeViewModel @Inject constructor(private val productRepository: ProductRe
         viewModelScope.launch(Dispatchers.IO) {
             when (val result = productRepository.fetchKinds()) {
                 is Result.Success -> {
+
                     val kindViewResults = result.data.map {
-                        KindView(it.name)
+                        KindView(it.name, select = it.default)
                     }
                     _fetchKindResult.postValue(kindViewResults)
                 }
