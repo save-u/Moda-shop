@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="8.dp">
+    android:layout_gravity="center"
+    android:paddingVertical="8.dp"
+    android:paddingHorizontal="5.dp">
 
     <ImageView
         android:id="@+id/imgProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="130.dp"
-        android:scaleType="fitCenter"
+        android:minHeight="150.dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_outline_image_50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +24,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="start"
-        android:paddingVertical="5.dp"
+        android:paddingVertical="3.dp"
         android:text="Something"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
