@@ -1,8 +1,13 @@
 package com.lycn.modashop.services.firebase
 
 import android.util.Log
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.getField
+import com.google.firebase.firestore.ktx.getField
 import com.lycn.modashop.data.model.Kind
 import com.lycn.modashop.data.model.Product
 import kotlinx.coroutines.tasks.await
@@ -16,6 +21,7 @@ class DefaultProductStoreService @Inject constructor(private val database: Fireb
         val logTag = "fetchKinds"
         try {
             val result = database.collection("kinds")
+                .orderBy("order")
                 .get()
                 .await()
             val kindResults = result.documents.map { doc ->
@@ -32,7 +38,9 @@ class DefaultProductStoreService @Inject constructor(private val database: Fireb
     override suspend fun fetchProductsByKind(kind: String): Result<List<Product>> {
         val logTag = "fetchProductsByKind: $kind"
         try {
+            val kindRef = database.collection("kinds").document(kind)
             val result = database.collection("products")
+                .whereEqualTo("kind", kindRef)
                 .get()
                 .await()
             val productResults = result.documents.map { doc ->
@@ -63,19 +71,20 @@ class DefaultProductStoreService @Inject constructor(private val database: Fireb
 }
 
 fun DocumentSnapshot.toProduct(): Product {
+    val kind = get(FieldPath.of("kind")) as DocumentReference
     return Product(
         id = id,
         name = getString("name")!!,
         price = getLong("price")!!.toInt(),
         imageUrl = getString("imageUrl") ?: "",
-        kind = getString("kind") ?: "",
+        kind = kind.path,
         currency = getString("currency")!!
     )
 }
 
 fun DocumentSnapshot.toKind(): Kind {
     return Kind(
-        name = id,
+        name = getString("name") ?: "",
         icon = ""
     )
 }

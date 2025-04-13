@@ -63,6 +63,9 @@ dependencies {
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
+
+    implementation(libs.bumptech.glide)
+    kapt(libs.bumptech.glide.compiler)
 }
 
 // Allow references to generated code
