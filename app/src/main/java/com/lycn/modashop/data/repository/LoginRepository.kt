@@ -1,9 +1,7 @@
 package com.lycn.modashop.data.repository
 
 import com.lycn.modashop.data.model.Result
-import com.lycn.modashop.data.datasource.LoginDataSource
-import com.lycn.modashop.data.model.LoggedInUser
-import com.lycn.modashop.services.firebase.FirebaseAuthService
+import com.lycn.modashop.services.firebase.AuthService
 import javax.inject.Inject
 
 /**
@@ -12,7 +10,7 @@ import javax.inject.Inject
  */
 
 class LoginRepository @Inject constructor(
-    private val firebaseAuthService: FirebaseAuthService
+    private val firebaseAuthService: AuthService
 ) {
 
     init {

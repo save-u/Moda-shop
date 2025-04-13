@@ -4,9 +4,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.lycn.modashop.services.firebase.DefaultFirebaseAuthService
-import com.lycn.modashop.services.firebase.DefaultFirebaseStoreService
-import com.lycn.modashop.services.firebase.FirebaseAuthService
-import com.lycn.modashop.services.firebase.FirebaseStoreService
+import com.lycn.modashop.services.firebase.DefaultFirebaseUserStoreService
+import com.lycn.modashop.services.firebase.AuthService
+import com.lycn.modashop.services.firebase.DefaultProductStoreService
+import com.lycn.modashop.services.firebase.ProductStoreService
+import com.lycn.modashop.services.firebase.UserStoreService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,12 +19,17 @@ import dagger.hilt.components.SingletonComponent
 object ServicesModule {
 
     @Provides
-    fun provideFirebaseAuthService(): FirebaseAuthService {
+    fun provideFirebaseAuthService(): AuthService {
         return DefaultFirebaseAuthService(FirebaseAuth.getInstance())
     }
 
     @Provides
-    fun provideFirebaseStoreService(): FirebaseStoreService {
-        return DefaultFirebaseStoreService(database = Firebase.firestore)
+    fun provideFirebaseUserStoreService(): UserStoreService {
+        return DefaultFirebaseUserStoreService(database = Firebase.firestore)
+    }
+
+    @Provides
+    fun provideFirebaseProductStoreService(): ProductStoreService {
+        return DefaultProductStoreService(database = Firebase.firestore)
     }
 }
