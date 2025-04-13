@@ -1,9 +1,11 @@
 package com.lycn.modashop.ui.home.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +15,7 @@ import com.lycn.modashop.ui.home.home.kinds.KindAdapter
 import com.lycn.modashop.ui.home.home.kinds.KindView
 import com.lycn.modashop.ui.home.home.products.ProductAdapter
 import com.lycn.modashop.ui.home.home.products.ProductView
+import com.lycn.modashop.ui.home.home.products.detail.ProductDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -30,6 +33,10 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    companion object {
+        val PRODUCT_ID_KEY = HomeFragment::class.java.name + "PRODUCT_ID_KEY"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,7 +96,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun onClickProductViewItem(productView: ProductView) {
-        // TODO:
+        val intent = Intent(requireContext(), ProductDetailActivity::class.java)
+        intent.putExtra(PRODUCT_ID_KEY, productView.id)
+        startActivity(intent)
     }
 
     override fun onStart() {
