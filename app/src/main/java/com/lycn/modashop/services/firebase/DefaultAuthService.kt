@@ -3,15 +3,11 @@ package com.lycn.modashop.services.firebase
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.lycn.modashop.data.model.Result
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
-import java.util.UUID
-import kotlin.math.log
-import kotlin.math.tan
 
 class DefaultFirebaseAuthService(
     private val auth: FirebaseAuth,
-) : FirebaseAuthService {
+) : AuthService {
 
     override suspend fun registerUser(email: String, password: String): Result<String> {
         val logTag = "Register user $email"

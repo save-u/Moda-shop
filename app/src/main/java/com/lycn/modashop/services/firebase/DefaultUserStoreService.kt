@@ -5,9 +5,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.lycn.modashop.data.model.Result
 import kotlinx.coroutines.tasks.await
 
-class DefaultFirebaseStoreService(
+class DefaultFirebaseUserStoreService(
     private val database: FirebaseFirestore,
-) : FirebaseStoreService {
+) : UserStoreService {
     override suspend fun addUser(
         userId: String,
         name: String,
