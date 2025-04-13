@@ -33,8 +33,7 @@ class LoginActivity : AppCompatActivity() {
         val editPassword = binding.editPassword
         val btnLogIn = binding.btnLogin
         val btnCreateAccount = binding.btnCreateAccount
-
-        val loading = binding.pbLoading
+        val pbProductLoading = binding.pbLoading
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -52,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
+            pbProductLoading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
@@ -74,7 +73,6 @@ class LoginActivity : AppCompatActivity() {
         btnLogIn.setOnClickListener {
             loginViewModel.login(editEmail.text.toString(), editPassword.text.toString())
         }
-
     }
 
     private fun navigateToRegister() {

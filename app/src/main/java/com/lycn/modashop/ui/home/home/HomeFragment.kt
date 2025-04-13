@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -47,10 +46,11 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
         val rvHighlightKinds = binding.rvHighlightKinds
         val rvProducts = binding.rvContent
+        val pbProductLoading = binding.pbProductLoading
 
         _homeViewModel.fetchKindResult.observe(viewLifecycleOwner) { data ->
             data.findLast { it.select }?.let {
-                _homeViewModel.fetchProductsByKind(it.name)
+                fetchProductByKind(it.name)
             }
             _kindAdapter?.apply {
                 items = data
@@ -59,6 +59,7 @@ class HomeFragment : Fragment() {
         }
 
         _homeViewModel.fetchProductResult.observe(viewLifecycleOwner) { data ->
+            pbProductLoading.visibility = View.GONE
             _productAdapter?.apply {
                 items = data
                 notifyDataSetChanged()
@@ -90,9 +91,18 @@ class HomeFragment : Fragment() {
                 }
             }
             _kindAdapter?.notifyDataSetChanged()
-        }
 
-        _homeViewModel.fetchProductsByKind(kindView.name)
+            fetchProductByKind(kindView.name)
+        }
+    }
+
+    private fun fetchKinds() {
+        _homeViewModel.fetchKind()
+    }
+
+    private fun fetchProductByKind(kind: String) {
+        _binding?.pbProductLoading?.visibility = View.VISIBLE
+        _homeViewModel.fetchProductsByKind(kind)
     }
 
     private fun onClickProductViewItem(productView: ProductView) {
@@ -103,7 +113,7 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        _homeViewModel.fetchKind()
+        fetchKinds()
     }
 
     override fun onDestroyView() {
