@@ -40,7 +40,8 @@ class DefaultProductStoreService @Inject constructor(private val database: Fireb
                 .await()
             val productList = kindResult.get("products") as? List<*>
 
-            val productRef: List<DocumentReference> = productList?.filterIsInstance<DocumentReference>() ?: listOf()
+            val productRef: List<DocumentReference> =
+                productList?.filterIsInstance<DocumentReference>() ?: listOf()
             val products = productRef.map { ref ->
                 val product = ref.get().await()
                 product.toProduct()
@@ -82,6 +83,7 @@ fun DocumentSnapshot.toProduct(): Product {
 fun DocumentSnapshot.toKind(): Kind {
     return Kind(
         name = getString("name") ?: "",
-        icon = ""
+        icon = "",
+        default = getBoolean("default") ?: false
     )
 }

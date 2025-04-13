@@ -42,6 +42,9 @@ class HomeFragment : Fragment() {
         val rvProducts = binding.rvContent
 
         _homeViewModel.fetchKindResult.observe(viewLifecycleOwner) { data ->
+            data.findLast { it.select }?.let {
+                _homeViewModel.fetchProductsByKind(it.name)
+            }
             _kindAdapter?.apply {
                 items = data
                 notifyDataSetChanged()

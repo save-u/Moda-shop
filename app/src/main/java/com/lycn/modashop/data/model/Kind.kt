@@ -2,7 +2,8 @@ package com.lycn.modashop.data.model
 
 data class Kind(
     val name: String,
-    val icon: String
+    val icon: String,
+    val default: Boolean = false
 ) {
 
 }
