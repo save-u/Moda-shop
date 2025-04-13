@@ -2,6 +2,7 @@ package com.lycn.modashop.services.firebase
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.lycn.modashop.data.model.Result
 import kotlinx.coroutines.tasks.await
 
@@ -41,6 +42,18 @@ class DefaultFirebaseAuthService(
             Log.e(logTag, e.message.toString())
             return Result.Error(e)
         }
+    }
+
+    override fun signOut() {
+        auth.signOut()
+    }
+
+    override fun isUserLogged(): Boolean {
+        return auth.currentUser != null
+    }
+
+    override fun currentUser(): FirebaseUser? {
+        return auth.currentUser
     }
 }
 

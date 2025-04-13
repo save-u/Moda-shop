@@ -2,10 +2,12 @@ package com.lycn.modashop.services.firebase
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.lycn.modashop.data.model.LoggedInUser
 import com.lycn.modashop.data.model.Result
 import kotlinx.coroutines.tasks.await
 
-class DefaultFirebaseUserStoreService(
+class DefaultUserStoreService(
     private val database: FirebaseFirestore,
 ) : UserStoreService {
     override suspend fun addUser(
@@ -31,11 +33,26 @@ class DefaultFirebaseUserStoreService(
             return Result.Error(e)
         }
     }
+
+    override suspend fun getLoggedInUser(email: String): Result<LoggedInUser> {
+        val logTag = "getLoggedInUser $email"
+        try {
+            val result = database.collection("users")
+                .whereEqualTo("email", email)
+                .get().await()
+            Log.i(logTag, "$result")
+            return Result.Success(result.last().toLoggedInUser())
+        } catch (e: Exception) {
+            Log.e(logTag, e.message.toString())
+            return Result.Error(e)
+        }
+    }
 }
 
-
-interface FirebaseRealtimeServiceCallback {
-    fun onAddUserSuccess(userId: String)
-
-    fun onAddUserFailed(ex: Exception)
+fun QueryDocumentSnapshot.toLoggedInUser(): LoggedInUser {
+    return LoggedInUser(
+        userId = getString("userId") ?: "",
+        displayName = getString("name") ?: "",
+        email = getString("email") ?: ""
+    )
 }

@@ -24,6 +24,10 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (loginViewModel.isUserExisted()) {
+            navigateToMain()
+        }
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -56,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                navigateToMain(loginResult.success)
+                navigateToMain()
             }
         })
 
@@ -81,8 +85,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-    private fun navigateToMain(userView: LoggedInUserView) {
+    private fun navigateToMain() {
         val intent = Intent(this, MainActivity::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)

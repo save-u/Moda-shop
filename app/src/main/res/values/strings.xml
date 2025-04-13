@@ -34,4 +34,6 @@
     <string name="action_add_to_cart">Add to cart</string>
     <string name="desc_cart">Cart</string>
     <string name="desc_favorite">Favorite</string>
+    <string name="action_sign_out">Sign out</string>
+    <string name="desc_profile">Profile</string>
 </resources>
